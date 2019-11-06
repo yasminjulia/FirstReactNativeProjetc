@@ -8,11 +8,12 @@
 import lista from './src/lista';
 import React from 'react';
 import styled from 'styled-components/native';
+import ListaItem from './android/app/src/ListaItem';
 
 const Page = styled.SafeAreaView `
 flex:1;
 `;
-const Scroll = styled.ScrollView `
+const Listagem = styled.FlatList `
 flex:1;
 background-color:#FF0000;
 `;
@@ -31,22 +32,15 @@ border: 5 px solid# FFF;
 ';
 
 export default () => {
-    return ( <
-        Page >
+    return ( < Page >
         <
-        Scroll > {
-            lista.map((item, index) => {
-                return ( <
-                    Item key = { index }
-                    activeOpacity = { 0.6 } >
-                    <
-                    ItemText > { item.task } < /ItemText>  <
-                    ItemCheck > < /ItemCheck> <
-                    /Item>
-                );
-            })
-        } <
-        /Scroll> <
-        /Page>
-    )
-}
+        Listagem data = { lista }
+        renderItem = {
+            () => < ListaItem data = {}
+            />} /
+            >
+
+            <
+            /Page>
+        );
+    }
