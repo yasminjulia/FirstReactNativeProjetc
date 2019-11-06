@@ -12,6 +12,7 @@
   "dependencies": {
     "react": "16.9.0",
     "react-native": "0.61.3",
+    "react-native-swipe-list-view": "^2.0.3",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
