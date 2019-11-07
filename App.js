@@ -14,12 +14,8 @@ import { SwipeListView } from 'react-native-swipe-list-view';
 import ListaItemSwipe from './ListaItemSwipe';
 import uuid from 'uuid/v4';
 
-const Page = styled.SafeAreaView `
+const Page = styled.SafeAreaView`
 flex:1;
-`;
-const SwipeListView = styled.FlatList `
-flex:1;
-background-color:#FF0000;
 `;
 
 export default () => {
@@ -51,26 +47,20 @@ export default () => {
         setItems(newItems);
     }
 
-    return ( <
-            Page >
-            <
-            AddItem onAdd = { addNewItem }
-            /> <
-            SwipeListView data = { items }
-            renderItem = {
-                ({ item, index }) => < ListaItem onPress = {
-                    () => toggleDone(index) }
-                data = { item }
-                />}
-                renderHiddenItem = {
-                    ({ item, index }) => < ListaItemSwipe onDelete = {
-                        () => deleteItem(index) }
+    return (
+        <Page>
+            <AddItem onAdd={addNewItem} />
+            <SwipeListView data={items}
+                renderItem={
+                    ({ item, index }) => <ListaItem onPress={
+                        () => toggleDone(index)}
+                        data={item}
                     />}
-                    leftOpenValue = { 50 }
-                    disableLeftSwipe = { true }
-                    keyExtractor = {
-                        (item) => item.id }
-                    /> <
-                    /Page>
-                );
-            }
+                leftOpenValue={50}
+                disableLeftSwipe={true}
+                keyExtractor={
+                    (item) => item.id}
+            />
+        </Page>
+    );
+}
