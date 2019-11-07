@@ -5,42 +5,72 @@
  * @format
  * @flow
  */
-import lista from './src/lista';
-import React from 'react';
+import lista from './lista';
+import React, { useState } from 'react';
 import styled from 'styled-components/native';
-import ListaItem from './android/app/src/ListaItem';
+import ListaItem from './ListaItem';
+import AddItem from './AddItem';
+import { SwipeListView } from 'react-native-swipe-list-view';
+import ListaItemSwipe from './ListaItemSwipe';
+import uuid from 'uuid/v4';
 
 const Page = styled.SafeAreaView `
 flex:1;
 `;
-const Listagem = styled.FlatList `
+const SwipeListView = styled.FlatList `
 flex:1;
 background-color:#FF0000;
 `;
-const Item = styled.TouchableOpacity `
-padding: 10px;
-background-color:#CCC;
-`;
-const ItemText = styled.Text `
-font-size: 13px;
-`;
-const ItemCheck = styled.View '
-width: 20 px;
-height: 20 px;
-border - radius: 10 px;
-border: 5 px solid# FFF;
-';
 
 export default () => {
-    return ( < Page >
-        <
-        Listagem data = { lista }
-        renderItem = {
-            () => < ListaItem data = {}
-            />} /
-            >
-
-            <
-            /Page>
-        );
+    const [items, setItems] = useState(lista);
+    const addNewItem = (txt) => {
+        let newItems = [...items];
+        newItems.push({
+            id: uuid(),
+            task: txt,
+            done: false
+        });
+        setItems(newItems);
     }
+    const toggleDone = (index) => {
+        let newItems = [...items];
+        newItems[index].done = !newItems[index].done;
+        setItems(newItems);
+    }
+    const deleteItem = (index) => {
+        let newItems = [...items];
+        newItems = newItems.filter((it, i) => {
+            if (i != index) {
+                return true;
+            } else {
+                return false;
+            }
+
+        });
+        setItems(newItems);
+    }
+
+    return ( <
+            Page >
+            <
+            AddItem onAdd = { addNewItem }
+            /> <
+            SwipeListView data = { items }
+            renderItem = {
+                ({ item, index }) => < ListaItem onPress = {
+                    () => toggleDone(index) }
+                data = { item }
+                />}
+                renderHiddenItem = {
+                    ({ item, index }) => < ListaItemSwipe onDelete = {
+                        () => deleteItem(index) }
+                    />}
+                    leftOpenValue = { 50 }
+                    disableLeftSwipe = { true }
+                    keyExtractor = {
+                        (item) => item.id }
+                    /> <
+                    /Page>
+                );
+            }
